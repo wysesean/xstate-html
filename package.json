@@ -1,21 +1,33 @@
 {
-  "name": "haunted-starter-app",
+  "name": "xstate-html",
   "version": "1.0.0",
-  "description": "A project for creating apps with Haunted and lit-html.",
+  "description": "Functional Reactive State Machines",
   "main": "index.html",
   "scripts": {
-    "start": "parcel index.html --open",
-    "build": "parcel build index.html"
+    "start": "parcel ./src/index.html --no-cache",
+    "build": "parcel build ./src/index.html"
   },
   "dependencies": {
-    "@matthewp/haunted": "^2.0.1",
-    "lit-html": "^0.13.0"
+    "aphrodite-jss": "^2.1.0",
+    "cxs": "^6.2.0",
+    "lit-html": "^0.13.0",
+    "reactive-state": "^3.2.1",
+    "router5": "^6.6.2",
+    "rxjs": "^6.3.3",
+    "rxjs-router5": "^5.3.5",
+    "xstate": "^4.2.0"
   },
   "devDependencies": {
-    "parcel-bundler": "^1.6.1"
+    "@types/rx": "^4.1.1",
+    "parcel-bundler": "^1.6.1",
+    "sass": "^1.15.1",
+    "typescript": "^3.1.6"
   },
-  "keywords": [
-    "web-components",
-    "lit-html"
-  ]
+  "alias": {
+    "~models": "./src/models",
+    "~services": "./src/services",
+    "~state-machines": "./src/state-machines",
+    "~util": "./src/util",
+    "~views": "./src/views"
+  }
 }
