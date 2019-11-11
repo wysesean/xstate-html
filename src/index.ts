@@ -1,37 +1,38 @@
-import { render } from "lit-html";
-import { routes } from "./routes";
-import { AppTemplate } from "~views/app";
-import { initializeMachine } from "~util/initialize-machine";
-import { initializeRouter } from "~util/initialize-router";
-import { lightsConfig } from "~state-machines/lights-machine";
-import { combineLatest } from "rxjs";
-
-function renderApp(state, services) {
-  render(AppTemplate(state, services), document.getElementById("app"));
-}
+import { render } from 'lit-html';
+import { AppTemplate } from '~views/app';
+import { Machine, interpret, assign } from 'xstate';
+import {
+  routerConfig,
+  routerActions,
+  routerServices,
+  routerGuards
+} from '~state-machines/router-machine';
 
 function bootStrap() {
-  const {
-    state$: lightMachineState$,
-    service: lightService
-  } = initializeMachine(lightsConfig);
-  const { route$, router } = initializeRouter(routes);
-
-  const state$ = combineLatest(
-    lightMachineState$,
-    route$
+  const machine = Machine(
+    {
+      ...routerConfig,
+    },
+    {
+      actions: { ...routerActions },
+      services: { ...routerServices },
+      guards: { ...routerGuards }
+    }
   );
+  const service = interpret(machine);
 
-  const services = {
-    lightService: lightService,
-    router
-  }
-
-  lightMachineState$.subscribe(y => console.log('machinestate', y))
-
-  state$.subscribe(([lightState, routerState]) => {
-    renderApp({lightState, routerState}, services);
+  service.onTransition(state => {
+    renderApp(state, service);
   });
+
+  service.start();
+}
+
+function renderApp(state, services) {
+  console.group(state.value)
+  console.log(state.context)
+  console.groupEnd()
+  render(AppTemplate(state, services), document.getElementById('app'));
 }
 
 bootStrap();

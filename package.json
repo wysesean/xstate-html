@@ -9,25 +9,27 @@
   },
   "dependencies": {
     "aphrodite-jss": "^2.1.0",
-    "cxs": "^6.2.0",
-    "lit-html": "^0.13.0",
-    "reactive-state": "^3.2.1",
-    "router5": "^6.6.2",
+    "lit-html": "^1.1.2",
+    "route-parser": "^0.0.5",
     "rxjs": "^6.3.3",
-    "rxjs-router5": "^5.3.5",
-    "xstate": "^4.2.0"
+    "spectre.css": "^0.5.8",
+    "xstate": "^4.6.7"
   },
   "devDependencies": {
     "@types/rx": "^4.1.1",
     "parcel-bundler": "^1.6.1",
+    "prettier": "^1.18.2",
     "sass": "^1.15.1",
-    "typescript": "^3.1.6"
+    "ts-lit-plugin": "^1.1.9",
+    "typescript": "^3.7.2"
   },
   "alias": {
     "~models": "./src/models",
     "~services": "./src/services",
     "~state-machines": "./src/state-machines",
     "~util": "./src/util",
-    "~views": "./src/views"
+    "~views": "./src/views",
+    "~views/components": "./src/views/components",
+    "~views/containers": "./src/views/containers"
   }
 }
