@@ -1,6 +1,6 @@
 import { render } from 'lit-html';
 import { AppTemplate } from '~views/app';
-import { Machine, interpret, assign } from 'xstate';
+import { Machine, interpret } from 'xstate';
 import {
   routerConfig,
   routerActions,
@@ -11,7 +11,7 @@ import {
 function bootStrap() {
   const machine = Machine(
     {
-      ...routerConfig,
+      ...routerConfig
     },
     {
       actions: { ...routerActions },
@@ -29,9 +29,9 @@ function bootStrap() {
 }
 
 function renderApp(state, services) {
-  console.group(state.value)
-  console.log(state.context)
-  console.groupEnd()
+  console.group(state.value);
+  console.log(state.context);
+  console.groupEnd();
   render(AppTemplate(state, services), document.getElementById('app'));
 }
 
