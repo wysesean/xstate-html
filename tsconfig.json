@@ -7,9 +7,13 @@
         "name": "ts-lit-plugin"
       }
     ],
-    "baseUrl": ".",
+    "baseUrl": "src",
     "paths": {
-      "~*": ["./src/*"]
+      "~*": ["./*"],
+      "~state-machines/*": ["state-machines/*"],
+      "~util/*": ["util/*"],
+      "~components/*": ["views/components/*"],
+      "~views/*": ["views/*"]
     }
   }
 }

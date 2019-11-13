@@ -21,15 +21,7 @@
     "prettier": "^1.18.2",
     "sass": "^1.15.1",
     "ts-lit-plugin": "^1.1.9",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^3.7.2"
-  },
-  "alias": {
-    "~models": "./src/models",
-    "~services": "./src/services",
-    "~state-machines": "./src/state-machines",
-    "~util": "./src/util",
-    "~views": "./src/views",
-    "~views/components": "./src/views/components",
-    "~views/containers": "./src/views/containers"
   }
 }
