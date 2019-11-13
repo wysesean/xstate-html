@@ -1,14 +1,15 @@
-import { StyleSheet, css } from 'aphrodite-jss';
-import { html } from 'lit-html';
-import { Switch, Link } from '~util/router';
-import { classMap } from 'lit-html/directives/class-map.js';
+import { StyleSheet, css } from "~styles/aphrodite-jss";
+import { html } from "lit-html";
+import { Switch, Link } from "~util/router";
+import { classMap } from "lit-html/directives/class-map.js";
+import { Header } from "~views/components/header";
 
 const sheet = StyleSheet.create({
   blue: {
-    color: 'blue'
+    color: "blue"
   },
   red: {
-    color: 'red'
+    color: "red"
   }
 });
 
@@ -58,58 +59,34 @@ const ErrorTemplate = html`
 `;
 
 export const AppTemplate = (state, service) => html`
+  ${Header(state, service)}
   <div>
     <nav>
       <h3
         class="${classMap({
-          [css(sheet.blue)]: state.matches('HOME'),
-          [css(sheet.red)]: state.matches('ABOUT')
+          [css(sheet.blue)]: state.matches("HOME"),
+          [css(sheet.red)]: state.matches("ABOUT")
         })}
       "
       >
         ${state.value}
       </h3>
-      ${Link(
-        {
-          type: 'NAVIGATE_HOME',
-          content: 'Home',
-          route: 'home'
-        },
-        service
-      )}
-      ${Link(
-        {
-          type: 'NAVIGATE_ABOUT',
-          content: 'About',
-          route: 'about'
-        },
-        service
-      )}
-      ${Link(
-        {
-          type: 'NAVIGATE_DETAILS',
-          content: 'Details',
-          route: 'details/:id',
-          params: { id: 5 }
-        },
-        service
-      )}
     </nav>
     ${Switch(state.value, [
       {
-        value: 'HOME',
+        value: "HOME",
         template: HomeTemplate
       },
       {
-        value: 'ABOUT',
+        value: "ABOUT",
         template: AboutTemplate
       },
       {
-        value: 'DETAILS',
+        value: "DETAILS",
         template: DetailsTemplate
       },
       {
-        value: 'ERROR',
+        value: "ERROR",
         template: ErrorTemplate
       }
     ])}
