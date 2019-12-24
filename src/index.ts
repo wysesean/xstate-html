@@ -1,15 +1,19 @@
 import { render } from 'lit-html';
 import { AppTemplate } from '~views/app';
-import { Machine, interpret } from 'xstate';
+import { interpret, createMachine } from 'xstate';
 import {
   routerConfig,
   routerActions,
   routerServices,
-  routerGuards
+  routerGuards,
+  RouterContext,
+  RouterEventTypes,
+  RouterState
 } from '~state-machines/router-machine';
+import { AppService, AppState } from '~util/types';
 
 function bootStrap() {
-  const machine = Machine(
+  const machine = createMachine<RouterContext, RouterEventTypes, RouterState>(
     {
       ...routerConfig
     },
@@ -22,17 +26,22 @@ function bootStrap() {
   const service = interpret(machine);
 
   service.onTransition(state => {
-    renderApp(state, service);
+    if (state.changed) {
+      requestAnimationFrame(() => renderApp(state, service));
+    }
   });
 
   service.start();
 }
 
-function renderApp(state, services) {
-  console.group(state.value);
+function renderApp(state: AppState, services: AppService) {
+  console.group(state.value as string);
   console.log(state.context);
   console.groupEnd();
-  render(AppTemplate(state, services), document.getElementById('app'));
+  render(
+    AppTemplate(state, services),
+    document.getElementById('app') as HTMLElement
+  );
 }
 
 bootStrap();

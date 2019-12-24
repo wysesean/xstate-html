@@ -1,21 +1,20 @@
-import { StyleSheet, css } from "~styles/aphrodite-jss";
-import { html } from "lit-html";
-import { Switch, Link } from "~util/router";
-import { classMap } from "lit-html/directives/class-map.js";
-import { Header } from "~views/components/header";
+import { css, StyleSheet } from '~styles/aphrodite-jss';
+import { html } from 'lit-html';
+import { Switch } from '~util/router';
+import { Header } from '~views/components/header';
+import { States } from '~state-machines/router-machine';
+import { TemplateFunction, AppState, AppService } from '~util/types';
 
 const sheet = StyleSheet.create({
-  blue: {
-    color: "blue"
-  },
-  red: {
-    color: "red"
+  topless: {
+    'margin-top': '-12px',
+    'margin-bottom': '-12px'
   }
 });
 
-const HomeTemplate = html`
-  <div>
-    <p class="text-primary">
+const NewsTemplate: TemplateFunction = () => html`
+  <div class="column col-10 col-mx-auto pt-2">
+    <p class="">
       Lorem ipsum crackalackin black amet, sizzle adipiscing ass. Bizzle we
       gonna chung velizzle, pimpin' volutpizzle, suscipit brizzle, the bizzle
       vizzle, arcu. Pellentesque egizzle tortor. Sed erizzle. Fusce izzle pizzle
@@ -25,9 +24,9 @@ const HomeTemplate = html`
   </div>
 `;
 
-const AboutTemplate = html`
-  <div class="bg-dark">
-    <p class="text-secondary">
+const AboutTemplate: TemplateFunction = () => html`
+  <div class="column col-10 col-mx-auto pt-2">
+    <p class="">
       Space, the final frontier. These are the voyages of the Starship
       Enterprise. Its five-year mission: to explore strange new worlds, to seek
       out new life and new civilizations, to boldly go where no man has gone
@@ -38,9 +37,9 @@ const AboutTemplate = html`
   </div>
 `;
 
-const DetailsTemplate = html`
-  <div>
-    <p class="text-success">
+const DetailsTemplate: TemplateFunction = () => html`
+  <div class="column col-10 col-mx-auto pt-2">
+    <p class="">
       Nori grape silver beet broccoli kombu beet greens fava bean potato
       quandong celery. Bunya nuts black-eyed pea prairie turnip leek lentil
       turnip greens parsnip. Sea lettuce lettuce water chestnut eggplant winter
@@ -50,7 +49,7 @@ const DetailsTemplate = html`
   </div>
 `;
 
-const ErrorTemplate = html`
+const ErrorTemplate: TemplateFunction = () => html`
   <div>
     <h1>
       404
@@ -58,37 +57,34 @@ const ErrorTemplate = html`
   </div>
 `;
 
-export const AppTemplate = (state, service) => html`
+export const AppTemplate: TemplateFunction = (
+  state: AppState,
+  service: AppService
+) => html`
+  <div class="${css(sheet.topless)}">
+    <progress class="progress" value="" max="100"></progress>
+  </div>
   ${Header(state, service)}
-  <div>
-    <nav>
-      <h3
-        class="${classMap({
-          [css(sheet.blue)]: state.matches("HOME"),
-          [css(sheet.red)]: state.matches("ABOUT")
-        })}
-      "
-      >
-        ${state.value}
-      </h3>
-    </nav>
-    ${Switch(state.value, [
-      {
-        value: "HOME",
-        template: HomeTemplate
-      },
-      {
-        value: "ABOUT",
-        template: AboutTemplate
-      },
-      {
-        value: "DETAILS",
-        template: DetailsTemplate
-      },
-      {
-        value: "ERROR",
-        template: ErrorTemplate
-      }
-    ])}
+  <div class="container p-2">
+    <div class="columns">
+      ${Switch(state, [
+        {
+          value: States.home,
+          template: NewsTemplate(state, service)
+        },
+        {
+          value: States.about,
+          template: AboutTemplate(state, service)
+        },
+        {
+          value: States.details,
+          template: DetailsTemplate(state, service)
+        },
+        {
+          value: States.error,
+          template: ErrorTemplate(state, service)
+        }
+      ])}
+    </div>
   </div>
 `;

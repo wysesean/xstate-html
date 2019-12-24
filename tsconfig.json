@@ -1,10 +1,16 @@
 // tsconfig.json
 {
   "compilerOptions": {
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "allowSyntheticDefaultImports": true,
+    "importHelpers": true,
+    "target": "ES2017",
     "lib": ["dom", "es2015", "es2016", "esnext"],
     "plugins": [
       {
-        "name": "ts-lit-plugin"
+        "name": "typescript-lit-html-plugin"
       }
     ],
     "baseUrl": "src",
